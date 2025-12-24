@@ -1,38 +1,62 @@
-function NavBar() {
+import React from "react";
+
+const NavBar: React.FC = () => {
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary">
-                            <span className="material-symbols-outlined text-xl">terminal</span>
+        <div className="relative w-full border-b border-[#2b2839] bg-[#121118]/80 backdrop-blur-md sticky top-0 z-50">
+            <div className="layout-container flex justify-center">
+                <header className="flex w-full max-w-[1280px] items-center justify-between whitespace-nowrap px-6 py-4 lg:px-10">
+                    <div className="flex items-center gap-4 text-white">
+                        <div className="size-6 text-primary">
+                            <span className="material-symbols-outlined text-[28px]">terminal</span>
                         </div>
-                        <h1 className="text-white text-lg font-bold tracking-tight">Buwaneka Sudheera</h1>
+                        <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+                            Portfolio
+                        </h2>
                     </div>
 
-                    <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-                        <a className="text-sm font-medium text-white hover:text-primary transition-colors" href="#home">Home</a>
-                        <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#about">About</a>
-                        <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#skills">Skills</a>
-                        <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#projects">Projects</a>
-                        <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#research">Research</a>
-                        <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#leadership">Leadership</a>
-                    </nav>
+                    <div className="flex items-center justify-end gap-8">
+                        <div className="hidden md:flex items-center gap-9">
+                            <button
+                                onClick={() => scrollToSection('home')}
+                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+                            >
+                                Home
+                            </button>
+                            <button
+                                onClick={() => scrollToSection('about')}
+                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+                            >
+                                About
+                            </button>
+                            <button
+                                onClick={() => scrollToSection('projects')}
+                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+                            >
+                                Work
+                            </button>
+                            <button
+                                onClick={() => scrollToSection('contact')}
+                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+                            >
+                                Contact
+                            </button>
+                        </div>
 
-                    <div className="hidden md:flex items-center gap-4">
-                        <a className="flex items-center gap-2 text-sm font-bold text-white bg-primary hover:bg-primary-dark transition-all px-4 py-2 rounded-lg shadow-lg shadow-primary/20" href="#contact">
-                            <span className="material-symbols-outlined text-[18px]">mail</span>
-                            <span>Contact</span>
-                        </a>
+                        <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary hover:bg-primary-light transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                            <span className="truncate">Resume</span>
+                        </button>
                     </div>
-
-                    <button className="md:hidden p-2 text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-colors" aria-label="Open menu">
-                        <span className="material-symbols-outlined">menu</span>
-                    </button>
-                </div>
+                </header>
             </div>
-        </header>
+        </div>
     );
-}
+};
 
 export default NavBar;
