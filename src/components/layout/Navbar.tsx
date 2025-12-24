@@ -1,61 +1,80 @@
 import React from "react";
 
-const NavBar: React.FC = () => {
+interface NavigationProps {
+    activeSection?: string;
+}
+
+const NavBar: React.FC<NavigationProps> = ({ activeSection = "home" }) => {
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: "smooth" });
         }
     };
 
     return (
-        <div className="relative w-full border-b border-[#2b2839] bg-[#121118]/80 backdrop-blur-md sticky top-0 z-50">
-            <div className="layout-container flex justify-center">
-                <header className="flex w-full max-w-[1280px] items-center justify-between whitespace-nowrap px-6 py-4 lg:px-10">
-                    <div className="flex items-center gap-4 text-white">
-                        <div className="size-6 text-primary">
-                            <span className="material-symbols-outlined text-[28px]">terminal</span>
-                        </div>
-                        <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
-                            Portfolio
-                        </h2>
+        <nav className="sticky top-0 z-50 w-full border-b border-solid border-border-dark bg-[#121118]/80 backdrop-blur-md">
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-10 h-16 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="size-8 rounded-lg bg-primary flex items-center justify-center text-white">
+                        <span className="material-symbols-outlined text-xl">terminal</span>
                     </div>
+                    <h2 className="text-white text-lg font-bold tracking-tight">DevPortfolio</h2>
+                </div>
 
-                    <div className="flex items-center justify-end gap-8">
-                        <div className="hidden md:flex items-center gap-9">
-                            <button
-                                onClick={() => scrollToSection('home')}
-                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
-                            >
-                                Home
-                            </button>
-                            <button
-                                onClick={() => scrollToSection('about')}
-                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
-                            >
-                                About
-                            </button>
-                            <button
-                                onClick={() => scrollToSection('projects')}
-                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
-                            >
-                                Work
-                            </button>
-                            <button
-                                onClick={() => scrollToSection('contact')}
-                                className="text-white text-sm font-medium hover:text-primary transition-colors cursor-pointer"
-                            >
-                                Contact
-                            </button>
-                        </div>
+                <div className="hidden md:flex items-center gap-8">
+                    <button
+                        onClick={() => scrollToSection("home")}
+                        className={`text-sm font-medium transition-colors ${
+                            activeSection === "home"
+                                ? "text-primary"
+                                : "text-gray-300 hover:text-white"
+                        }`}
+                    >
+                        Home
+                    </button>
+                    <button
+                        onClick={() => scrollToSection("about")}
+                        className={`text-sm font-medium transition-colors ${
+                            activeSection === "about"
+                                ? "text-primary"
+                                : "text-gray-300 hover:text-white"
+                        }`}
+                    >
+                        About
+                    </button>
+                    <button
+                        onClick={() => scrollToSection("projects")}
+                        className={`text-sm font-medium transition-colors ${
+                            activeSection === "projects"
+                                ? "text-primary"
+                                : "text-gray-300 hover:text-white"
+                        }`}
+                    >
+                        Work
+                    </button>
+                    <button
+                        onClick={() => scrollToSection("contact")}
+                        className={`text-sm font-medium transition-colors ${
+                            activeSection === "contact"
+                                ? "text-primary"
+                                : "text-gray-300 hover:text-white"
+                        }`}
+                    >
+                        Contact
+                    </button>
+                </div>
 
-                        <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary hover:bg-primary-light transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                            <span className="truncate">Resume</span>
-                        </button>
-                    </div>
-                </header>
+                <button className="hidden md:flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold shadow-lg shadow-primary/25">
+                    <span>Hire Me</span>
+                </button>
+
+                {/* Mobile Menu Icon */}
+                <button className="md:hidden text-white">
+                    <span className="material-symbols-outlined">menu</span>
+                </button>
             </div>
-        </div>
+        </nav>
     );
 };
 

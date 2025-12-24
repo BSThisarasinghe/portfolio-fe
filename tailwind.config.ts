@@ -17,6 +17,7 @@ export default {
                 'surface-dark': '#1d1c27',
                 'card-dark': '#1d1c27',
                 'text-subtle': '#a19db9',
+                'text-muted': '#a19db9',
                 'border-dark': '#2b2839',
             },
             fontFamily: {

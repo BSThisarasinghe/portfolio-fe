@@ -15,18 +15,6 @@
     background-size: 20px 20px;
 }
 
-/* Custom styles for glass panel effect */
-.glass-panel {
-    background: rgba(28, 25, 44, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.code-snippet {
-    font-family: 'Courier New', Courier, monospace;
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
@@ -43,6 +31,18 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: #4b2bee;
+}
+
+/* Custom styles for glass panel effect */
+.glass-panel {
+    background: rgba(28, 25, 44, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.code-snippet {
+    font-family: 'Courier New', Courier, monospace;
 }
 
 /* Animations */
@@ -124,4 +124,12 @@
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+}
+
+/* Form input focus styles */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(75, 43, 238, 0.5);
 }
