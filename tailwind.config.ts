@@ -14,6 +14,7 @@ export default {
                 'primary-dark': '#3a1eb8',
                 'background-light': '#f6f6f8',
                 'background-dark': '#131022',
+                'background-card': '#1c192c', // Added this from your HTML
                 'surface-dark': '#1d1c27',
                 'card-dark': '#1d1c27',
                 'text-subtle': '#a19db9',
@@ -22,7 +23,7 @@ export default {
             },
             fontFamily: {
                 display: ['Inter', 'sans-serif'],
-                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+                mono: ['Fira Code', 'monospace', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

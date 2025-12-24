@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import emailjs from '@emailjs/browser';
+
+// Replace these with your actual EmailJS credentials
+const EMAILJS_SERVICE_ID = 'service_symbi93';  // e.g., 'service_portfolio'
+const EMAILJS_TEMPLATE_ID = 'template_r2y0dzo'; // e.g., 'template_contact_form'
+const EMAILJS_PUBLIC_KEY = 'DI8Bn6gBzZinontkS';   // e.g., 'user_abc123...'
 
 const Contact: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -7,6 +13,12 @@ const Contact: React.FC = () => {
         subject: "",
         message: "",
     });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{
+        type: 'success' | 'error' | null;
+        message: string;
+    }>({ type: null, message: '' });
 
     const contactInfo = [
         {
@@ -40,11 +52,11 @@ const Contact: React.FC = () => {
     ];
 
     const subjectOptions = [
-        { value: "", label: "How can I help you?" },
-        { value: "collaboration", label: "Collaboration Inquiry" },
-        { value: "hiring", label: "Full-time Opportunity" },
-        { value: "consulting", label: "Consulting / Freelance" },
-        { value: "other", label: "Other" },
+        { value: "", label: "How can I help you?", disabled: true },
+        { value: "Collaboration", label: "Collaboration Inquiry" },
+        { value: "Hiring", label: "Full-time Opportunity" },
+        { value: "Consulting", label: "Consulting / Freelance" },
+        { value: "Other", label: "Other" },
     ];
 
     const handleInputChange = (
@@ -55,23 +67,78 @@ const Contact: React.FC = () => {
             ...prev,
             [name]: value,
         }));
+        // Clear any previous submit status when user starts typing
+        if (submitStatus.type) {
+            setSubmitStatus({ type: null, message: '' });
+        }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log("Form submitted:", formData);
-        // Reset form
-        setFormData({
-            name: "",
-            email: "",
-            subject: "",
-            message: "",
-        });
+
+        // Basic validation
+        if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+            setSubmitStatus({
+                type: 'error',
+                message: 'Please fill in all required fields.'
+            });
+            return;
+        }
+
+        if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            setSubmitStatus({
+                type: 'error',
+                message: 'Please enter a valid email address.'
+            });
+            return;
+        }
+
+        setIsSubmitting(true);
+        setSubmitStatus({ type: null, message: '' });
+
+        try {
+            const templateParams = {
+                name: formData.name,
+                email: formData.email,
+                subject: formData.subject || 'No subject provided',
+                message: formData.message,
+            };
+
+            // Send email using EmailJS
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                templateParams,
+                EMAILJS_PUBLIC_KEY
+            );
+
+            // Success
+            setSubmitStatus({
+                type: 'success',
+                message: 'Message sent successfully! I\'ll get back to you soon.'
+            });
+
+            // Reset form
+            setFormData({
+                name: "",
+                email: "",
+                subject: "",
+                message: "",
+            });
+
+        } catch (error) {
+            console.error('Failed to send message:', error);
+            setSubmitStatus({
+                type: 'error',
+                message: 'Failed to send message. Please try again or contact me directly via email.'
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
-        <main className="flex-grow flex flex-col lg:grid lg:grid-cols-12 min-h-screen">
+        <main className="flex-grow flex flex-col lg:grid lg:grid-cols-12 min-h-screen" id="contact">
             {/* Left Column: Branding, Context & Contact Info */}
             <div className="lg:col-span-5 xl:col-span-6 relative flex flex-col justify-center p-6 sm:p-12 lg:p-16 code-bg border-b lg:border-b-0 lg:border-r border-border-dark overflow-hidden">
                 {/* Decorative Glow */}
@@ -131,31 +198,53 @@ const Contact: React.FC = () => {
                         </p>
                     </div>
 
+                    {/* Status Message */}
+                    {submitStatus.type && (
+                        <div className={`mb-6 p-4 rounded-lg ${
+                            submitStatus.type === 'success'
+                                ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+                                : 'bg-red-500/10 border border-red-500/20 text-red-400'
+                        }`}>
+                            <div className="flex items-start gap-2">
+                <span className="material-symbols-outlined mt-0.5">
+                  {submitStatus.type === 'success' ? 'check_circle' : 'error'}
+                </span>
+                                <span className="text-sm">{submitStatus.message}</span>
+                            </div>
+                        </div>
+                    )}
+
                     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                         {/* Row 1: Name & Email */}
                         <div className="flex flex-col sm:flex-row gap-5">
                             <label className="flex flex-col flex-1 gap-2">
-                                <span className="text-sm font-semibold text-gray-300">Name</span>
+                <span className="text-sm font-semibold text-gray-300">
+                  Name <span className="text-red-400">*</span>
+                </span>
                                 <input
-                                    className="w-full h-12 rounded-lg bg-[#121118] border border-border-dark text-white px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600"
+                                    className="w-full h-12 rounded-lg bg-[#121118] border border-border-dark text-white px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600 disabled:opacity-50"
                                     placeholder="John Doe"
                                     type="text"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleInputChange}
+                                    disabled={isSubmitting}
                                     required
                                 />
                             </label>
 
                             <label className="flex flex-col flex-1 gap-2">
-                                <span className="text-sm font-semibold text-gray-300">Email</span>
+                <span className="text-sm font-semibold text-gray-300">
+                  Email <span className="text-red-400">*</span>
+                </span>
                                 <input
-                                    className="w-full h-12 rounded-lg bg-[#121118] border border-border-dark text-white px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600"
+                                    className="w-full h-12 rounded-lg bg-[#121118] border border-border-dark text-white px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600 disabled:opacity-50"
                                     placeholder="john@example.com"
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
+                                    disabled={isSubmitting}
                                     required
                                 />
                             </label>
@@ -166,14 +255,14 @@ const Contact: React.FC = () => {
                             <span className="text-sm font-semibold text-gray-300">Subject</span>
                             <div className="relative">
                                 <select
-                                    className="w-full h-12 rounded-lg bg-[#121118] border border-border-dark text-white px-4 pr-10 focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer"
+                                    className="w-full h-12 rounded-lg bg-[#121118] border border-border-dark text-white px-4 pr-10 focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                     name="subject"
                                     value={formData.subject}
                                     onChange={handleInputChange}
-                                    required
+                                    disabled={isSubmitting}
                                 >
                                     {subjectOptions.map((option) => (
-                                        <option key={option.value} value={option.value}>
+                                        <option key={option.value} value={option.value} disabled={option.disabled}>
                                             {option.label}
                                         </option>
                                     ))}
@@ -186,13 +275,16 @@ const Contact: React.FC = () => {
 
                         {/* Row 3: Message */}
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm font-semibold text-gray-300">Message</span>
+              <span className="text-sm font-semibold text-gray-300">
+                Message <span className="text-red-400">*</span>
+              </span>
                             <textarea
-                                className="w-full min-h-[160px] rounded-lg bg-[#121118] border border-border-dark text-white p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600 resize-none"
+                                className="w-full min-h-[160px] rounded-lg bg-[#121118] border border-border-dark text-white p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600 resize-none disabled:opacity-50"
                                 placeholder="Tell me a bit about your project, timeline, and goals..."
                                 name="message"
                                 value={formData.message}
                                 onChange={handleInputChange}
+                                disabled={isSubmitting}
                                 required
                             ></textarea>
                         </label>
@@ -200,14 +292,30 @@ const Contact: React.FC = () => {
                         {/* Action */}
                         <div className="pt-2">
                             <button
-                                className="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-base rounded-lg shadow-lg shadow-primary/25 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 group"
+                                className={`w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-base rounded-lg shadow-lg shadow-primary/25 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 ${
+                                    isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                                }`}
                                 type="submit"
+                                disabled={isSubmitting}
                             >
-                                <span>Send Message</span>
-                                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">
-                  send
-                </span>
+                                {isSubmitting ? (
+                                    <>
+                                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span>Sending...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Send Message</span>
+                                        <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">send</span>
+                                    </>
+                                )}
                             </button>
+                            <p className="text-xs text-gray-500 mt-2 text-center">
+                                <span className="text-red-400">*</span> Required fields
+                            </p>
                         </div>
                     </form>
 

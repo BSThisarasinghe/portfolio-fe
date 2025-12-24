@@ -2,14 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Glass effect */
-.glass-effect {
-    background: rgba(29, 28, 39, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-/* Code background */
+/* Code background for specific sections */
 .code-bg {
     background-image: radial-gradient(#2b2839 1px, transparent 1px);
     background-size: 20px 20px;
