@@ -63,7 +63,7 @@ const Projects: React.FC = () => {
     ];
 
     return (
-        <main className="relative flex flex-col items-center min-h-screen pt-10 pb-20 px-4 md:px-10 code-bg">
+        <main className="relative flex flex-col items-center min-h-screen pt-10 pb-20 px-4 md:px-10 code-bg" id={"projects"}>
             {/* Background pattern is handled by code-bg class in index.css */}
 
             {/* Header Section */}

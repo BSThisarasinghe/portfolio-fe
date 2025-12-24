@@ -4,9 +4,11 @@ interface NavigationProps {
     activeSection?: string;
 }
 
-const NavBar: React.FC<NavigationProps> = ({ activeSection = "home" }) => {
+const NavBar: React.FC<NavigationProps> = () => {
+    const [activeSection, setActiveSection] = React.useState("home");
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId);
+        setActiveSection(sectionId)
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
         }
@@ -44,6 +46,16 @@ const NavBar: React.FC<NavigationProps> = ({ activeSection = "home" }) => {
                         About
                     </button>
                     <button
+                        onClick={() => scrollToSection("technologies")}
+                        className={`text-sm font-medium transition-colors ${
+                            activeSection === "technologies"
+                                ? "text-primary"
+                                : "text-gray-300 hover:text-white"
+                        }`}
+                    >
+                        Technologies
+                    </button>
+                    <button
                         onClick={() => scrollToSection("projects")}
                         className={`text-sm font-medium transition-colors ${
                             activeSection === "projects"
@@ -65,7 +77,9 @@ const NavBar: React.FC<NavigationProps> = ({ activeSection = "home" }) => {
                     </button>
                 </div>
 
-                <button className="hidden md:flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold shadow-lg shadow-primary/25">
+                <button
+                    onClick={() => scrollToSection("contact")}
+                    className="hidden md:flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold shadow-lg shadow-primary/25">
                     <span>Hire Me</span>
                 </button>
 

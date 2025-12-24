@@ -138,7 +138,7 @@ const Technologies: React.FC = () => {
     ];
 
     return (
-        <section className="relative py-16 bg-background-dark">
+        <section className="relative py-16 bg-background-dark" id="technologies">
             {/* Background Pattern */}
             <div
                 className="fixed inset-0 z-0 opacity-5 pointer-events-none"
