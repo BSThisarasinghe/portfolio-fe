@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import emailjs from '@emailjs/browser';
 
-// Replace these with your actual EmailJS credentials
-const EMAILJS_SERVICE_ID = 'service_symbi93';  // e.g., 'service_portfolio'
-const EMAILJS_TEMPLATE_ID = 'template_r2y0dzo'; // e.g., 'template_contact_form'
-const EMAILJS_PUBLIC_KEY = 'DI8Bn6gBzZinontkS';   // e.g., 'user_abc123...'
+// In your code
+const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || '';
+const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '';
+const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
 
 const Contact: React.FC = () => {
     const [formData, setFormData] = useState({
