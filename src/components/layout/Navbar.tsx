@@ -1,5 +1,3 @@
-import React from "react";
-
 function NavBar() {
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md">

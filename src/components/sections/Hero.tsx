@@ -1,13 +1,10 @@
-// src/components/sections/Hero.tsx
 import React from "react";
 
-const heroBgUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDIQLHUhh4GV62egYZvznznMjopshXbrp13RbAgSSDJsqxokcyPhJsfrsKelZdhjstF9NwVKaqLBdiTUicMw0UArC1ReciYj5DVYnm4PIW3N9rZ8U8whxSn2PpZjKV425VaDlc4h82Gv9peyjAL9-2ET1xSefQlUCpv9hLwmcwFY4yJ3p5EdQ5i4o6OYkl7ZnIsQnIZN1oFu1IZxDprjt7oXIuA05S3xZOsk5tv5cZRbHPxrhUwIOgoLQ1sUTn4d0hmtvf7YoNrNAfW";
+const heroBgUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDIQLHUhh4GV62egYZvznznMjopshXbrp13RbAgSSDJsqxokcyPhJsfrsKelZdhjstF9NwVKaqLBdiTUicMw0UArC1ReciYj5DVYnm4PIW3N9rZ8U8whxSn2PpZjKV425VaDlc4h82Gv9peyjAL9-2ET1xSefQlUCpv9hLwmcwFY4yJ3p5EdQ5i4o6OYkl7ZnIsQnIZN1oFu1IZxDprjt7oXIuA05S3xZOsk5tv5cZRbHPxrhUwIOgoLQ1sUTn4d0hmtvf7YoNrNAfW";
 
 const Hero: React.FC = () => {
     return (
         <>
-            {/* Main Hero */}
             <main className="flex-grow flex items-center justify-center relative" id="home">
                 <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-20">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -101,7 +98,7 @@ const Hero: React.FC = () => {
                                         <span className="text-yellow-300">Buwaneka</span>
                                         <span className="text-gray-400 mx-2">extends</span>
                                         <span className="text-blue-400">Engineer</span>
-                                        <span className="text-gray-300"> {' {'}</span>
+                                        <span className="text-gray-300"> {'{'}</span>
                                     </div>
 
                                     <div className="pl-4 flex">
@@ -118,7 +115,7 @@ const Hero: React.FC = () => {
                                         <span className="text-pink-500">buildPlatform</span>
                                         <span> (</span>
                                         <span className="text-orange-300">scale</span>
-                                        <span>) {' {'}</span>
+                                        <span>) {'{'}</span>
                                     </div>
 
                                     <div className="pl-8 text-gray-400">// Implementing clean architecture</div>
@@ -132,8 +129,8 @@ const Hero: React.FC = () => {
                                         <span>);</span>
                                     </div>
 
-                                    <div className="pl-4 text-gray-300">`{'}'}`</div>
-                                    <div className="text-gray-300">`{'}'}`</div>
+                                    <div className="pl-4 text-gray-300">{'}'}</div>
+                                    <div className="text-gray-300">{'}'}</div>
                                 </div>
 
                                 <div className="absolute -bottom-4 -right-4 bg-background-card border border-primary/30 p-3 rounded-lg shadow-lg flex items-center gap-3">
